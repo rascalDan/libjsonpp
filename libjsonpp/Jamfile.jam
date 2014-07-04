@@ -1,0 +1,20 @@
+import package ;
+
+alias glibmm : : : :
+	<cflags>"`pkg-config --cflags glibmm-2.4`"
+	<linkflags>"`pkg-config --libs glibmm-2.4`"
+	;
+
+cpp-pch pch : pch.hpp :
+	<library>glibmm
+	;
+lib jsonpp :
+	pch [ glob *.cpp ]
+	:
+	<include>.
+	<library>glibmm
+	: :
+	<include>.
+	;
+
+package.install install : <install-source-root>. : : jsonpp : [ glob *.h ] ;
