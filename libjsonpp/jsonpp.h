@@ -6,8 +6,14 @@
 #include <boost/variant.hpp>
 #include <map>
 #include <list>
+#include <stdexcept>
 
 namespace json {
+	class ParseError : public std::invalid_argument {
+		public:
+			ParseError(gunichar);
+	};
+
 	typedef Glib::ustring String;
 	typedef double Number;
 	typedef bool Boolean;

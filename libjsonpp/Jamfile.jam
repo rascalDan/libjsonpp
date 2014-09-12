@@ -1,4 +1,5 @@
 import package ;
+import testing ;
 
 alias glibmm : : : :
 	<cflags>"`pkg-config --cflags glibmm-2.4`"
@@ -9,12 +10,23 @@ cpp-pch pch : pch.hpp :
 	<library>glibmm
 	;
 lib jsonpp :
-	pch [ glob *.cpp ]
+	pch [ glob *.cpp : test*.cpp ]
 	:
 	<include>.
 	<library>glibmm
 	: :
 	<include>.
+	;
+
+cpp-pch testpch : testpch.hpp :
+	<library>glibmm
+	<library>jsonpp
+	;
+unit-test test1 :
+	testpch
+	test1.cpp
+	:
+	<library>jsonpp
 	;
 
 package.install install : <install-source-root>. : : jsonpp : [ glob *.h ] ;

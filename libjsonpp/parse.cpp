@@ -2,13 +2,17 @@
 #include "jsonpp.h"
 
 namespace json {
-	class ParseError { };
+	ParseError::ParseError(gunichar c) :
+		std::invalid_argument(Glib::ustring("Parse error at or near ") + Glib::ustring(1, c))
+	{
+	}
 	String parseString(Glib::ustring::const_iterator & s) {
 		while (Glib::Unicode::isspace(*s)) s++;
-		if (*s++ != '"') throw ParseError();
+		if (*s++ != '"') throw ParseError(*--s);
 		String str;
 		while (*s != '"') {
 			if (*s == '\\') {
+				++s;
 				switch (*s) {
 					case '"':
 						str += '"';
@@ -49,7 +53,7 @@ namespace json {
 									c += (*s - 'A');
 								}
 								else {
-									throw ParseError();
+									throw ParseError(*s);
 								}
 								s++;
 							}
@@ -58,7 +62,7 @@ namespace json {
 						}
 						break;
 					default:
-						throw ParseError();
+						throw ParseError(*s);
 				}
 			}
 			else {
@@ -66,7 +70,7 @@ namespace json {
 			}
 			s++;
 		}
-		if (*s++ != '"') throw ParseError();
+		if (*s++ != '"') throw ParseError(*--s);
 		return str;
 	}
 	Number parseNumber(Glib::ustring::const_iterator & s) {
@@ -93,7 +97,7 @@ namespace json {
 				}
 			}
 			else if (*s == '.') {
-				if (dot || e) throw ParseError();
+				if (dot || e) throw ParseError(*s);
 				dot = true;
 			}
 			else if (*s == 'e' || *s == 'E') {
@@ -127,7 +131,7 @@ namespace json {
 			}
 			s++;
 		}
-		if (digits < 1) throw ParseError();
+		if (digits < 1) throw ParseError(*s);
 		return neg ? -v : v;
 	}
 	Value parseValue(Glib::ustring::const_iterator & s) {
@@ -151,21 +155,21 @@ namespace json {
 	Object parseObject(const Glib::ustring & s) {
 		Glib::ustring::const_iterator i = s.begin();
 		Object o = parseObject(i);
-		if (i != s.end()) throw ParseError();
+		if (i != s.end()) throw ParseError(*i);
 		return o;
 	}
 	Object parseObject(Glib::ustring::const_iterator & s) {
 		Object o;
 		while (Glib::Unicode::isspace(*s)) s++;
-		if (*s != '{') throw ParseError();
+		if (*s != '{') throw ParseError(*s);
 		do {
 			s++;
 			while (Glib::Unicode::isspace(*s)) s++;
 			if (*s == '}') return o;
 			String key = parseString(s);
 			while (Glib::Unicode::isspace(*s)) s++;
-			if (*s++ != ':') throw ParseError();
-			if (!o.insert(Object::value_type(key, ValuePtr(new Value(parseValue(s))))).second) throw ParseError();
+			if (*s++ != ':') throw ParseError(*--s);
+			if (!o.insert(Object::value_type(key, ValuePtr(new Value(parseValue(s))))).second) throw ParseError(*s);
 			while (Glib::Unicode::isspace(*s)) s++;
 		} while (*s == ',');
 		if (*s == '}') {
@@ -173,12 +177,12 @@ namespace json {
 			while (Glib::Unicode::isspace(*s)) s++;
 			return o;
 		}
-		throw ParseError();
+		throw ParseError(*s);
 	}
 	Array parseArray(Glib::ustring::const_iterator & s) {
 		Array a;
 		while (Glib::Unicode::isspace(*s)) s++;
-		if (*s != '[') throw ParseError();
+		if (*s != '[') throw ParseError(*s);
 		do {
 			s++;
 			while (Glib::Unicode::isspace(*s)) s++;
@@ -193,31 +197,33 @@ namespace json {
 			s++;
 			return a;
 		}
-		throw ParseError();
+		throw ParseError(*s);
 	}
 	Null parseNull(Glib::ustring::const_iterator & s) {
-		if (*s++ != 'n') throw ParseError();
-		if (*s++ != 'u') throw ParseError();
-		if (*s++ != 'l') throw ParseError();
-		if (*s++ != 'l') throw ParseError();
+		while (Glib::Unicode::isspace(*s)) s++;
+		if (*s++ != 'n') throw ParseError(*--s);
+		if (*s++ != 'u') throw ParseError(*--s);
+		if (*s++ != 'l') throw ParseError(*--s);
+		if (*s++ != 'l') throw ParseError(*--s);
 		return Null();
 	}
 	Boolean parseBoolean(Glib::ustring::const_iterator & s) {
+		while (Glib::Unicode::isspace(*s)) s++;
 		if (*s == 't') {
 			s++;
-			if (*s++ != 'r') throw ParseError();
-			if (*s++ != 'u') throw ParseError();
-			if (*s++ != 'e') throw ParseError();
+			if (*s++ != 'r') throw ParseError(*--s);
+			if (*s++ != 'u') throw ParseError(*--s);
+			if (*s++ != 'e') throw ParseError(*--s);
 			return true;
 		}
 		else if (*s == 'f') {
 			s++;
-			if (*s++ != 'a') throw ParseError();
-			if (*s++ != 'l') throw ParseError();
-			if (*s++ != 's') throw ParseError();
-			if (*s++ != 'e') throw ParseError();
+			if (*s++ != 'a') throw ParseError(*--s);
+			if (*s++ != 'l') throw ParseError(*--s);
+			if (*s++ != 's') throw ParseError(*--s);
+			if (*s++ != 'e') throw ParseError(*--s);
 			return false;
 		}
-		throw ParseError();
+		throw ParseError(*s);
 	}
 }
