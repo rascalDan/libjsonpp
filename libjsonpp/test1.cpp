@@ -1,7 +1,10 @@
+#include <pch.hpp>
+
 #define BOOST_TEST_MODULE parsing
-#include <boost/test/included/unit_test.hpp>
+#include <boost/test/unit_test.hpp>
 
 #include "jsonpp.h"
+#include <fstream>
 
 BOOST_AUTO_TEST_CASE( parse_bool_true )
 {

@@ -5,6 +5,7 @@ alias glibmm : : : :
 	<cflags>"`pkg-config --cflags glibmm-2.4`"
 	<linkflags>"`pkg-config --libs glibmm-2.4`"
 	;
+lib boost_utf : : <name>boost_unit_test_framework ;
 
 cpp-pch pch : pch.hpp :
 	<library>glibmm
@@ -18,15 +19,13 @@ lib jsonpp :
 	<include>.
 	;
 
-cpp-pch testpch : testpch.hpp :
-	<library>glibmm
-	<library>jsonpp
-	;
 unit-test test1 :
-	testpch
 	test1.cpp
+	pch
 	:
+	<define>BOOST_TEST_DYN_LINK
 	<library>jsonpp
+	<library>boost_utf
 	;
 
 package.install install : <install-source-root>. : : jsonpp : [ glob *.h ] ;
