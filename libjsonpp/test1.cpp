@@ -5,6 +5,11 @@
 
 #include "jsonpp.h"
 #include <fstream>
+#include <boost/filesystem/path.hpp>
+
+#define XSTR(s) STR(s)
+#define STR(s) #s
+const boost::filesystem::path root(XSTR(ROOT));
 
 BOOST_AUTO_TEST_CASE( parse_bool_true )
 {
@@ -107,7 +112,7 @@ BOOST_AUTO_TEST_CASE( parse_string_escapedQuote )
 
 BOOST_AUTO_TEST_CASE( parse_sample_complexFile )
 {
-	std::ifstream inFile("initial/sample1.json");
+	std::ifstream inFile((root / "initial" / "sample1.json").string());
 	std::stringstream buffer;
 	buffer << inFile.rdbuf();
 	Glib::ustring doc(buffer.str());

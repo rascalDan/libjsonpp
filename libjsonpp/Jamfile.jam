@@ -6,6 +6,10 @@ alias glibmm : : : :
 	<linkflags>"`pkg-config --libs glibmm-2.4`"
 	;
 lib boost_utf : : <name>boost_unit_test_framework ;
+lib boost_system ;
+lib boost_filesystem ;
+
+path-constant me : . ;
 
 cpp-pch pch : pch.hpp :
 	<library>glibmm
@@ -23,9 +27,12 @@ unit-test test1 :
 	test1.cpp
 	pch
 	:
+	<define>ROOT=\"$(me)\"
 	<define>BOOST_TEST_DYN_LINK
 	<library>jsonpp
 	<library>boost_utf
+	<library>boost_system
+	<library>boost_filesystem
 	;
 
 package.install install : <install-source-root>. : : jsonpp : [ glob *.h ] ;
