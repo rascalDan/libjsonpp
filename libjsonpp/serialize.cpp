@@ -1,6 +1,5 @@
 #include <pch.hpp>
 #include "jsonpp.h"
-#include <boost/foreach.hpp>
 #include <glibmm/convert.h>
 
 namespace json {
@@ -38,7 +37,7 @@ namespace json {
 		s << std::boolalpha;
 		s << std::fixed;
 		s << '{';
-		BOOST_FOREACH(const Object::value_type & v, o) {
+		for (const Object::value_type & v : o) {
 			if (&v != &*o.begin()) {
 				s << ',';
 			}
@@ -55,7 +54,7 @@ namespace json {
 
 	void serializeArray(const Array & a, std::ostream & s, const std::string & enc) {
 		s << '[';
-		BOOST_FOREACH(const Array::value_type & v, a) {
+		for (const Array::value_type & v : a) {
 			if (&v != &*a.begin()) {
 				s << ',';
 			}
