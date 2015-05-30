@@ -23,16 +23,18 @@ lib jsonpp :
 	<include>.
 	;
 
-unit-test test1 :
+run
 	test1.cpp
 	pch
-	:
+	: : :
 	<define>ROOT=\"$(me)\"
 	<define>BOOST_TEST_DYN_LINK
 	<library>jsonpp
 	<library>boost_utf
 	<library>boost_system
 	<library>boost_filesystem
+	:
+	test1
 	;
 
 package.install install : <install-source-root>. : : jsonpp : [ glob *.h ] ;
