@@ -11,7 +11,7 @@
 namespace json {
 	class ParseError : public std::invalid_argument {
 		public:
-			ParseError(gunichar);
+			ParseError(const char *, int, int);
 	};
 
 	typedef Glib::ustring String;
@@ -33,12 +33,10 @@ namespace json {
 
 	Object parseObject(Glib::ustring::const_iterator &);
 	Object parseObject(const Glib::ustring &);
-	String parseString(Glib::ustring::const_iterator & s);
-	Number parseNumber(Glib::ustring::const_iterator & s);
-	Boolean parseBoolean(Glib::ustring::const_iterator & s);
-	Null parseNull(Glib::ustring::const_iterator & s);
+	Value parseValue(std::istream &);
+	Value parseValue(std::istream &, const std::string & encoding);
+	Value parseValue(const Glib::ustring & s);
 	Value parseValue(Glib::ustring::const_iterator & s);
-	Array parseArray(Glib::ustring::const_iterator &);
 
 	void serializeObject(const Object &, std::ostream & s, const std::string & encoding);
 	void serializeValue(const Value &, std::ostream & s, const std::string & encoding);

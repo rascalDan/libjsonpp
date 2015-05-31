@@ -1,5 +1,6 @@
 import package ;
 import testing ;
+import lex ;
 
 alias glibmm : : : :
 	<cflags>"`pkg-config --cflags glibmm-2.4`"
@@ -15,10 +16,11 @@ cpp-pch pch : pch.hpp :
 	<library>glibmm
 	;
 lib jsonpp :
-	pch [ glob *.cpp : test*.cpp ]
+	pch [ glob *.cpp *.ll : test*.cpp ]
 	:
 	<include>.
 	<library>glibmm
+	<cflags>-Wno-error=sign-compare
 	: :
 	<include>.
 	;
