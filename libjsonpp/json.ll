@@ -5,11 +5,13 @@
 %option stack
 %option yylineno
 %option yyclass="json::jsonFlexLexer"
+%option prefix="jsonBase"
 
 %{
 #include "jsonFlexLexer.h"
 #include <boost/lexical_cast.hpp>
 #include <boost/bind.hpp>
+#pragma GCC diagnostic ignored "-Wsign-compare"
 %}
 
 beginobj "{"

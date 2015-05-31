@@ -20,7 +20,7 @@ lib jsonpp :
 	:
 	<include>.
 	<library>glibmm
-	<cflags>-Wno-error=sign-compare
+	<define>yyFlexLexer=jsonBaseFlexLexer
 	: :
 	<include>.
 	;
