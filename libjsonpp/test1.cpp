@@ -84,7 +84,17 @@ BOOST_AUTO_TEST_CASE( parse_empty_array )
 {
 	const Glib::ustring val(" [  ] ");
 	BOOST_REQUIRE(boost::get<json::Array>(json::parseValue(val)).empty());
+}
 
+BOOST_AUTO_TEST_CASE( parse_empty_arrary_in_object )
+{
+	const Glib::ustring val(" { \"v1\": [ ], \"v2\": 100 } ");
+	auto value = json::parseValue(val);
+	BOOST_REQUIRE_EQUAL(3, value.which());
+	auto obj = boost::get<json::Object>(value);
+	BOOST_REQUIRE_EQUAL(2, obj.size());
+	BOOST_REQUIRE(boost::get<json::Array>(*obj["v1"]).empty());
+	BOOST_REQUIRE_EQUAL(100, boost::get<json::Number>(*obj["v2"]));
 }
 
 BOOST_AUTO_TEST_CASE( parse_broken_array )
@@ -174,9 +184,15 @@ BOOST_AUTO_TEST_CASE( parse_string_escapedUnicode )
 	BOOST_REQUIRE_EQUAL("A Űņĩćőđē string.", boost::get<json::String>(json::parseValue(val)));
 }
 
-BOOST_AUTO_TEST_CASE( parse_sample_complexFile )
+BOOST_AUTO_TEST_CASE( parse_sample_complexFile1 )
 {
 	std::ifstream inFile((root / "initial" / "sample1.json").string());
+	json::Value obj = json::parseValue(inFile, "utf-8");
+}
+
+BOOST_AUTO_TEST_CASE( parse_sample_complexFile2 )
+{
+	std::ifstream inFile((root / "initial" / "sample2.json").string());
 	json::Value obj = json::parseValue(inFile, "utf-8");
 }
 

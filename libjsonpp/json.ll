@@ -97,7 +97,13 @@ escape "\\"
 	yy_pop_state();
 }
 
-<ARRAY_ITEM,ARRAY_NEXT>{endarray} {
+<ARRAY_ITEM>{endarray} {
+	PushArray();
+	yy_pop_state();
+	yy_pop_state();
+}
+
+<ARRAY_NEXT>{endarray} {
 	PushArray();
 	yy_pop_state();
 }
