@@ -41,4 +41,18 @@ run
 	testParse
 	;
 
+run
+	testSerialise.cpp
+	pch
+	: : :
+	<define>ROOT=\"$(me)\"
+	<define>BOOST_TEST_DYN_LINK
+	<library>jsonpp
+	<library>boost_utf
+	<library>boost_system
+	<library>boost_filesystem
+	:
+	testSerialise
+	;
+
 package.install install : <install-source-root>. : : jsonpp : [ glob *.h ] ;

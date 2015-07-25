@@ -1,6 +1,7 @@
 #include <pch.hpp>
 #include "jsonpp.h"
 #include <glibmm/convert.h>
+#include <ios>
 
 namespace json {
 	class JsonSerialize : public boost::static_visitor<> {
@@ -128,11 +129,12 @@ namespace json {
 	}
 
 	void serializeNumber(const Number & n, std::ostream & s, const std::string & ) {
+		s.unsetf(std::ios::fixed);
 		s << n;
 	}
 
 	void serializeBoolean(const Boolean & b, std::ostream & s, const std::string & ) {
-		s << b;
+		s << (b ? "true" : "false");
 	}
 
 	void serializeNull(const Null &, std::ostream & s, const std::string & ) {
