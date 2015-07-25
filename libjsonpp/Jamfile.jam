@@ -55,4 +55,18 @@ run
 	testSerialise
 	;
 
+run
+	testEncoding.cpp
+	pch
+	: : :
+	<define>ROOT=\"$(me)\"
+	<define>BOOST_TEST_DYN_LINK
+	<library>jsonpp
+	<library>boost_utf
+	<library>boost_system
+	<library>boost_filesystem
+	:
+	testEncoding
+	;
+
 package.install install : <install-source-root>. : : jsonpp : [ glob *.h ] ;

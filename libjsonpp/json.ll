@@ -152,8 +152,9 @@ escape "\\"
 
 %%
 
-json::jsonFlexLexer::jsonFlexLexer(std::istream & in, const std::string &) :
-	yyFlexLexer(&in, NULL)
+json::jsonFlexLexer::jsonFlexLexer(std::istream & in, const std::string & enc) :
+	yyFlexLexer(&in, NULL),
+	encoding(enc)
 {
 	yy_push_state(VALUE);
 	acceptValues.push(boost::bind(&jsonFlexLexer::RootValue, this, _1));
