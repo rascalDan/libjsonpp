@@ -28,7 +28,7 @@ lib jsonpp :
 	;
 
 run
-	test1.cpp
+	testParse.cpp
 	pch
 	: : :
 	<define>ROOT=\"$(me)\"
@@ -38,7 +38,7 @@ run
 	<library>boost_system
 	<library>boost_filesystem
 	:
-	test1
+	testParse
 	;
 
 package.install install : <install-source-root>. : : jsonpp : [ glob *.h ] ;
