@@ -8,6 +8,7 @@
 #include <list>
 #include <stdexcept>
 
+#pragma GCC visibility push(default)
 namespace json {
 	class ParseError : public std::invalid_argument {
 		public:
@@ -47,6 +48,7 @@ namespace json {
 	void serializeNull(const Null &, std::ostream & s, const std::string & encoding);
 	Glib::ustring serializeObject(const Object &, const std::string & encoding);
 }
+#pragma GCC visibility pop
 
 #endif
 
