@@ -21,7 +21,6 @@ lib jsonpp :
 	<include>.
 	<library>glibmm
 	<define>yyFlexLexer=jsonBaseFlexLexer
-	<cflags>-fvisibility=hidden
 	: :
 	<include>.
 	;
