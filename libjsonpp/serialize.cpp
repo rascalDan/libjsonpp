@@ -1,4 +1,3 @@
-#include <pch.hpp>
 #include "jsonpp.h"
 #include <glibmm/convert.h>
 #include <ios>

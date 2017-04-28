@@ -2,24 +2,17 @@ import package ;
 import testing ;
 import lex ;
 
-alias glibmm : : : :
-	<cflags>"`pkg-config --cflags glibmm-2.4`"
-	<linkflags>"`pkg-config --libs glibmm-2.4`"
-	;
 lib boost_utf : : <name>boost_unit_test_framework ;
 lib boost_system ;
 lib boost_filesystem ;
 
 path-constant me : . ;
 
-cpp-pch pch : pch.hpp :
-	<library>glibmm
-	;
 lib jsonpp :
-	pch [ glob *.cpp *.ll : test*.cpp ]
+	[ glob *.cpp *.ll : test*.cpp ]
 	:
 	<include>.
-	<library>glibmm
+	<library>..//glibmm
 	<define>yyFlexLexer=jsonBaseFlexLexer
 	: :
 	<include>.
@@ -27,7 +20,6 @@ lib jsonpp :
 
 run
 	testParse.cpp
-	pch
 	: : :
 	<define>ROOT=\"$(me)\"
 	<define>BOOST_TEST_DYN_LINK
@@ -41,7 +33,6 @@ run
 
 run
 	testSerialise.cpp
-	pch
 	: : :
 	<define>ROOT=\"$(me)\"
 	<define>BOOST_TEST_DYN_LINK
@@ -55,7 +46,6 @@ run
 
 run
 	testEncoding.cpp
-	pch
 	: : :
 	<define>ROOT=\"$(me)\"
 	<define>BOOST_TEST_DYN_LINK
@@ -68,3 +58,4 @@ run
 	;
 
 package.install install : <install-source-root>. : : jsonpp : [ glob *.h ] ;
+
