@@ -57,5 +57,5 @@ run
 	testEncoding
 	;
 
-package.install install : <install-source-root>. : : jsonpp : [ glob *.h ] ;
+package.install install : <install-source-root>. : : jsonpp : [ glob *.h : jsonFlexLexer.h ] ;
 
