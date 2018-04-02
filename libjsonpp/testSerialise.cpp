@@ -81,6 +81,21 @@ BOOST_AUTO_TEST_CASE( serialise_whitespace )
 	BOOST_REQUIRE_EQUAL("\"\\r\\n\\t\"", writeString(Glib::ustring("\r\n\t")));
 }
 
+BOOST_AUTO_TEST_CASE( serialise_control )
+{
+	BOOST_REQUIRE_EQUAL("\"\\b\\f\"", writeString(Glib::ustring("\b\f")));
+}
+
+BOOST_AUTO_TEST_CASE( serialise_slashes )
+{
+	BOOST_REQUIRE_EQUAL("\"\\\\\\/\"", writeString(Glib::ustring("\\/")));
+}
+
+BOOST_AUTO_TEST_CASE( serialise_other )
+{
+	BOOST_REQUIRE_EQUAL("\"\\u000b\\u0007\"", writeString(Glib::ustring("\v\a")));
+}
+
 BOOST_AUTO_TEST_CASE( serialise_quotes )
 {
 	BOOST_REQUIRE_EQUAL("\"string with \\\" in\"", writeString(Glib::ustring("string with \" in")));

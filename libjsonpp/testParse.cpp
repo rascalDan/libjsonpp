@@ -127,7 +127,7 @@ BOOST_AUTO_TEST_CASE( parse_string_simple )
 BOOST_AUTO_TEST_CASE( parse_object_withStringContainingQuote )
 {
 	const Glib::ustring val(" { \"key1\": \"value1\", \"key2\": \"value\\\"2\\\"\", \"key3\": 3 } ");
-	auto obj = json::parseObject(val);
+	auto obj = boost::get<json::Object>(json::parseValue(val));
 	BOOST_REQUIRE_EQUAL(3, obj.size());
 	BOOST_REQUIRE_EQUAL("value1", boost::get<json::String>(*obj["key1"]));
 	BOOST_REQUIRE_EQUAL("value\"2\"", boost::get<json::String>(*obj["key2"]));

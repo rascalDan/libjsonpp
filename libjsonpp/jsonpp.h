@@ -32,21 +32,12 @@ namespace json {
 			Value(const X & x) : VT(x) { }
 	};
 
-	Object parseObject(Glib::ustring::const_iterator &);
-	Object parseObject(const Glib::ustring &);
 	Value parseValue(std::istream &);
 	Value parseValue(std::istream &, const std::string & encoding);
 	Value parseValue(const Glib::ustring & s);
 	Value parseValue(Glib::ustring::const_iterator & s);
 
-	void serializeObject(const Object &, std::ostream & s, const std::string & encoding);
 	void serializeValue(const Value &, std::ostream & s, const std::string & encoding);
-	void serializeArray(const Array &, std::ostream & s, const std::string & encoding);
-	void serializeString(const String &, std::ostream & s, const std::string & encoding);
-	void serializeNumber(const Number &, std::ostream & s, const std::string & encoding);
-	void serializeBoolean(const Boolean &, std::ostream & s, const std::string & encoding);
-	void serializeNull(const Null &, std::ostream & s, const std::string & encoding);
-	Glib::ustring serializeObject(const Object &, const std::string & encoding);
 }
 #pragma GCC visibility pop
 
