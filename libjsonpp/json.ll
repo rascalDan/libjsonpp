@@ -10,7 +10,6 @@
 %{
 #include "jsonFlexLexer.h"
 #include <boost/lexical_cast.hpp>
-#include <boost/bind.hpp>
 #pragma GCC diagnostic ignored "-Wsign-compare"
 %}
 
