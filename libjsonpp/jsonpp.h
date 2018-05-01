@@ -2,7 +2,7 @@
 #define JSON_H
 
 #include <glibmm/ustring.h>
-#include <boost/shared_ptr.hpp>
+#include <memory>
 #include <boost/variant.hpp>
 #include <map>
 #include <list>
@@ -20,7 +20,7 @@ namespace json {
 	typedef bool Boolean;
 	class Null { };
 	class Value;
-	typedef boost::shared_ptr<Value> ValuePtr;
+	typedef std::shared_ptr<Value> ValuePtr;
 	typedef std::map<std::string, ValuePtr> Object;
 	typedef std::list<ValuePtr> Array;
 	typedef boost::variant<Null, String, Number, Object, Array, Boolean> VT;
