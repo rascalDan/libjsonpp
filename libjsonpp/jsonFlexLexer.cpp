@@ -3,6 +3,16 @@
 #include <glibmm/convert.h>
 
 namespace json {
+	jsonFlexLexer::jsonFlexLexer(std::istream & in, const std::string & enc) :
+		yyFlexLexer(&in, NULL),
+		encoding(enc)
+	{
+		yy_push_state(0);
+		acceptValues.push([this](const auto & value) {
+			return values.emplace(std::make_shared<Value>(value)).get();
+		});
+	}
+
 	ValuePtr
 	jsonFlexLexer::getValue() const
 	{

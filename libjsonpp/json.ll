@@ -32,42 +32,41 @@ escape "\\"
 %x ARRAY_NEXT
 %x COLON
 %x TEXT
-%x VALUE
 %x STRING
 %x ESCAPE
 
 %%
 
-<ARRAY_ITEM,VALUE>{true} {
+<ARRAY_ITEM,INITIAL>{true} {
 	PushBoolean(true);
 	yy_pop_state();
 }
 
-<ARRAY_ITEM,VALUE>{false} {
+<ARRAY_ITEM,INITIAL>{false} {
 	PushBoolean(false);
 	yy_pop_state();
 }
 
-<ARRAY_ITEM,VALUE>{number} {
+<ARRAY_ITEM,INITIAL>{number} {
 	PushNumber(std::strtod(YYText(), NULL));
 	yy_pop_state();
 }
 
-<ARRAY_ITEM,VALUE>{null} {
+<ARRAY_ITEM,INITIAL>{null} {
 	PushNull();
 	yy_pop_state();
 }
 
-<ARRAY_ITEM,VALUE,OBJECT_ITEM>{beginstr} {
+<ARRAY_ITEM,INITIAL,OBJECT_ITEM>{beginstr} {
 	yy_push_state(STRING);
 }
 
-<ARRAY_ITEM,VALUE>{beginobj} {
+<ARRAY_ITEM,INITIAL>{beginobj} {
 	BeginObject();
 	BEGIN(OBJECT_ITEM);
 }
 
-<ARRAY_ITEM,VALUE>{beginarray} {
+<ARRAY_ITEM,INITIAL>{beginarray} {
 	BeginArray();
 	BEGIN(ARRAY_NEXT);
 	yy_push_state(ARRAY_ITEM);
@@ -77,7 +76,7 @@ escape "\\"
 	yy_pop_state();
 	switch (YY_START) {
 		case ARRAY_ITEM:
-		case VALUE:
+		case INITIAL:
 			PushText(encodeBuf());
 			yy_pop_state();
 			break;
@@ -107,7 +106,7 @@ escape "\\"
 
 <COLON>{colon} {
 	BEGIN(OBJECT_NEXT);
-	yy_push_state(VALUE);
+	yy_push_state(INITIAL);
 }
 
 <OBJECT_NEXT>{separator} {
@@ -115,7 +114,7 @@ escape "\\"
 }
 
 <ARRAY_NEXT>{separator} {
-	yy_push_state(VALUE);
+	yy_push_state(INITIAL);
 }
 
 <STRING>{escape} {
@@ -145,17 +144,5 @@ escape "\\"
 
 <*>. {
 	throw ParseError(YYText(), yylineno, YY_START);
-}
-
-%%
-
-json::jsonFlexLexer::jsonFlexLexer(std::istream & in, const std::string & enc) :
-	yyFlexLexer(&in, NULL),
-	encoding(enc)
-{
-	yy_push_state(VALUE);
-  acceptValues.push([this](const auto & value) {
-		return values.emplace(std::make_shared<Value>(value)).get();
-  });
 }
 
