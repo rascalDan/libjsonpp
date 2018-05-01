@@ -9,7 +9,6 @@
 
 %{
 #include "jsonFlexLexer.h"
-#include <boost/lexical_cast.hpp>
 #pragma GCC diagnostic ignored "-Wsign-compare"
 %}
 
@@ -50,7 +49,7 @@ escape "\\"
 }
 
 <ARRAY_ITEM,VALUE>{number} {
-	PushNumber(boost::lexical_cast<double>(YYText()));
+	PushNumber(std::strtod(YYText(), NULL));
 	yy_pop_state();
 }
 
