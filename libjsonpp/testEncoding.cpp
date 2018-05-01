@@ -22,7 +22,7 @@ BOOST_AUTO_TEST_CASE( parse_latin1 )
 {
 	std::stringstream ss("\"A \xD9\xF1\xEE\xE7\xF4\xD0\xE8 string.\"");
 	BOOST_REQUIRE_EQUAL(19, ss.str().length());
-	BOOST_REQUIRE_EQUAL("A ÙñîçôÐè string.", boost::get<Glib::ustring>(json::parseValue(ss, "latin1")));
+	BOOST_REQUIRE_EQUAL("A ÙñîçôÐè string.", std::get<Glib::ustring>(json::parseValue(ss, "latin1")));
 }
 
 BOOST_AUTO_TEST_CASE( write_latin1 )

@@ -21,7 +21,7 @@ namespace json {
 	void
 	jsonFlexLexer::BeginObject()
 	{
-		auto object = boost::get<Object>(acceptValues.top()(Object()));
+		auto object = std::get_if<Object>(acceptValues.top()(Object()));
 		acceptValues.push([object,this](const auto & value) {
 			return object->insert_or_assign(name, std::make_shared<Value>(value)).first->second.get();
 		});
@@ -30,7 +30,7 @@ namespace json {
 	void
 	jsonFlexLexer::BeginArray()
 	{
-		auto array = boost::get<Array>(acceptValues.top()(Array()));
+		auto array = std::get_if<Array>(acceptValues.top()(Array()));
 		acceptValues.push([array](const auto & value) {
 			return array->emplace_back(std::make_shared<Value>(value)).get();
 		});

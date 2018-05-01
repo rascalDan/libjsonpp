@@ -3,7 +3,7 @@
 
 #include <glibmm/ustring.h>
 #include <memory>
-#include <boost/variant.hpp>
+#include <variant>
 #include <map>
 #include <list>
 #include <stdexcept>
@@ -23,7 +23,7 @@ namespace json {
 	typedef std::shared_ptr<Value> ValuePtr;
 	typedef std::map<std::string, ValuePtr> Object;
 	typedef std::list<ValuePtr> Array;
-	typedef boost::variant<Null, String, Number, Object, Array, Boolean> VT;
+	typedef std::variant<Null, String, Number, Object, Array, Boolean> VT;
 	class Value : public VT {
 		public:
 			Value() : VT(Null()) { }

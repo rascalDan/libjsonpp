@@ -24,7 +24,7 @@ namespace json {
 	}
 
 	Object parseObject(const Glib::ustring & s) {
-		return boost::get<Object>(parseValue(s));
+		return std::get<Object>(parseValue(s));
 	}
 
 	Value parseValue(Glib::ustring::const_iterator & s) {

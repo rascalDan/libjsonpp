@@ -7,7 +7,7 @@ namespace json {
 	const std::string null("null");
 	const std::string utf8("utf-8");
 
-	class JsonSerialize : public boost::static_visitor<> {
+	class JsonSerialize {
 		public:
 			JsonSerialize(std::ostream & out, const std::string & encoding) :
 				s(out),
@@ -17,8 +17,8 @@ namespace json {
 						<< std::setfill('0') // for String \uNNNN
 						;
 				}
-			void operator()(const Value & v) const {
-				boost::apply_visitor(*this, v);
+			void operator()(const VT & v) const {
+				std::visit(*this, v);
 			}
 			void operator()(const std::string & str) const {
 				(*this)(str, e);
