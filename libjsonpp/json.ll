@@ -157,6 +157,8 @@ json::jsonFlexLexer::jsonFlexLexer(std::istream & in, const std::string & enc) :
 	encoding(enc)
 {
 	yy_push_state(VALUE);
-	acceptValues.push(boost::bind(&jsonFlexLexer::RootValue, this, _1));
+  acceptValues.push([this](const auto & value) {
+		return values.emplace(std::make_shared<Value>(value)).get();
+  });
 }
 

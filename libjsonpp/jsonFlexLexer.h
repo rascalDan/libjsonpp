@@ -4,7 +4,7 @@
 #include <string>
 #include "jsonpp.h"
 #include <stack>
-#include <boost/function.hpp>
+#include <functional>
 
 namespace json {
 	class jsonFlexLexer : public yyFlexLexer {
@@ -26,16 +26,12 @@ namespace json {
 			void PushObject();
 
 		private:
-			Value * RootValue(const Value &);
-			Value * ArrayAppend(Array *, const Value &);
-			Value * ObjectMember(Object *, const Value &);
-
 			std::string encodeBuf() const;
 
 			std::string buf, name, encoding;
 			std::stack<ValuePtr> values;
 
-			typedef boost::function<Value *(const Value &)> AcceptValue;
+			typedef std::function<Value *(const Value &)> AcceptValue;
 			std::stack<AcceptValue> acceptValues;
 	};
 }

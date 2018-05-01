@@ -1,6 +1,5 @@
 #include <FlexLexer.h>
 #include "jsonFlexLexer.h"
-#include <boost/bind.hpp>
 #include <glibmm/convert.h>
 
 namespace json {
@@ -8,30 +7,6 @@ namespace json {
 	jsonFlexLexer::getValue() const
 	{
 		return values.top();
-	}
-
-	Value *
-	jsonFlexLexer::RootValue(const Value & value)
-	{
-		auto v = ValuePtr(new Value(value));
-		values.push(v);
-		return v.get();
-	}
-
-	Value *
-	jsonFlexLexer::ArrayAppend(Array * array, const Value & value)
-	{
-		auto v = ValuePtr(new Value(value));
-		array->push_back(v);
-		return v.get();
-	}
-
-	Value *
-	jsonFlexLexer::ObjectMember(Object * object, const Value & value)
-	{
-		auto v = ValuePtr(new Value(value));
-		(*object)[name] = v;
-		return v.get();
 	}
 
 	std::string
@@ -47,14 +22,18 @@ namespace json {
 	jsonFlexLexer::BeginObject()
 	{
 		auto object = boost::get<Object>(acceptValues.top()(Object()));
-		acceptValues.push(boost::bind(&jsonFlexLexer::ObjectMember, this, object, _1));
+		acceptValues.push([object,this](const auto & value) {
+			return object->insert_or_assign(name, std::make_shared<Value>(value)).first->second.get();
+		});
 	}
 
 	void
 	jsonFlexLexer::BeginArray()
 	{
 		auto array = boost::get<Array>(acceptValues.top()(Array()));
-		acceptValues.push(boost::bind(&jsonFlexLexer::ArrayAppend, this, array, _1));
+		acceptValues.push([array](const auto & value) {
+			return array->emplace_back(std::make_shared<Value>(value)).get();
+		});
 	}
 
 	void
