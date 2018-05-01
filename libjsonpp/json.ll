@@ -21,7 +21,6 @@ beginstr "\""
 endstr "\""
 true "true"
 false "false"
-bool {true|false}
 null "null"
 number [-+]?[0-9]+(\.[0-9]+)?
 colon ":"
