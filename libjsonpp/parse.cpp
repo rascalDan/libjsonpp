@@ -13,9 +13,10 @@ namespace json {
 	}
 
 	Value parseValue(std::istream & s, const std::string & enc) {
-		jsonFlexLexer jfl(s, enc);
+		Value v;
+		jsonFlexLexer jfl(s, enc, v);
 		while (jfl.yylex()) ;
-		return *jfl.getValue();
+		return v;
 	}
 
 	Value parseValue(const Glib::ustring & s) {

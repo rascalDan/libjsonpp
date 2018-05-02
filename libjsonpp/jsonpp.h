@@ -2,7 +2,6 @@
 #define JSON_H
 
 #include <glibmm/ustring.h>
-#include <memory>
 #include <variant>
 #include <map>
 #include <list>
@@ -20,9 +19,8 @@ namespace json {
 	typedef bool Boolean;
 	class Null { };
 	class Value;
-	typedef std::shared_ptr<Value> ValuePtr;
-	typedef std::map<std::string, ValuePtr> Object;
-	typedef std::list<ValuePtr> Array;
+	typedef std::map<std::string, Value> Object;
+	typedef std::list<Value> Array;
 	typedef std::variant<Null, String, Number, Object, Array, Boolean> VT;
 	class Value : public VT {
 		public:

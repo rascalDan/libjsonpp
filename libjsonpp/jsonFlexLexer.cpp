@@ -3,20 +3,15 @@
 #include <glibmm/convert.h>
 
 namespace json {
-	jsonFlexLexer::jsonFlexLexer(std::istream & in, const std::string & enc) :
+	jsonFlexLexer::jsonFlexLexer(std::istream & in, const std::string & enc, Value & v) :
 		yyFlexLexer(&in, NULL),
 		encoding(enc)
 	{
 		yy_push_state(0);
-		acceptValues.push([this](const auto & value) {
-			return values.emplace(std::make_shared<Value>(value)).get();
+		acceptValues.push([&v](const auto & value) {
+			v = value;
+			return &v;
 		});
-	}
-
-	ValuePtr
-	jsonFlexLexer::getValue() const
-	{
-		return values.top();
 	}
 
 	std::string
@@ -33,7 +28,7 @@ namespace json {
 	{
 		auto object = std::get_if<Object>(acceptValues.top()(Object()));
 		acceptValues.push([object,this](const auto & value) {
-			return object->insert_or_assign(name, std::make_shared<Value>(value)).first->second.get();
+			return &object->insert_or_assign(name, value).first->second;
 		});
 	}
 
@@ -42,7 +37,7 @@ namespace json {
 	{
 		auto array = std::get_if<Array>(acceptValues.top()(Array()));
 		acceptValues.push([array](const auto & value) {
-			return array->emplace_back(std::make_shared<Value>(value)).get();
+			return &array->emplace_back(value);
 		});
 	}
 

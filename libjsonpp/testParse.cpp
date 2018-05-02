@@ -57,13 +57,13 @@ BOOST_AUTO_TEST_CASE( parse_array )
 	auto arr = std::get<json::Array>(json::parseValue(val));
 	BOOST_REQUIRE_EQUAL(7, arr.size());
 	auto itr = arr.begin();
-	BOOST_REQUIRE_EQUAL(1, std::get<json::Number>(**itr++));
-	BOOST_REQUIRE_EQUAL(2, std::get<json::Number>(**itr++));
-	BOOST_REQUIRE_EQUAL(3, std::get<json::Number>(**itr++));
-	std::get<json::Array>(**itr++);
-	std::get<json::Object>(**itr++);
-	BOOST_REQUIRE_EQUAL(9, std::get<json::Number>(**itr++));
-	BOOST_REQUIRE_EQUAL(10, std::get<json::Number>(**itr++));
+	BOOST_REQUIRE_EQUAL(1, std::get<json::Number>(*itr++));
+	BOOST_REQUIRE_EQUAL(2, std::get<json::Number>(*itr++));
+	BOOST_REQUIRE_EQUAL(3, std::get<json::Number>(*itr++));
+	std::get<json::Array>(*itr++);
+	std::get<json::Object>(*itr++);
+	BOOST_REQUIRE_EQUAL(9, std::get<json::Number>(*itr++));
+	BOOST_REQUIRE_EQUAL(10, std::get<json::Number>(*itr++));
 }
 
 BOOST_AUTO_TEST_CASE( parse_array_of_strings )
@@ -91,8 +91,8 @@ BOOST_AUTO_TEST_CASE( parse_empty_arrary_in_object )
 	BOOST_REQUIRE_EQUAL(3, value.index());
 	auto obj = std::get<json::Object>(value);
 	BOOST_REQUIRE_EQUAL(2, obj.size());
-	BOOST_REQUIRE(std::get<json::Array>(*obj["v1"]).empty());
-	BOOST_REQUIRE_EQUAL(100, std::get<json::Number>(*obj["v2"]));
+	BOOST_REQUIRE(std::get<json::Array>(obj["v1"]).empty());
+	BOOST_REQUIRE_EQUAL(100, std::get<json::Number>(obj["v2"]));
 }
 
 BOOST_AUTO_TEST_CASE( parse_broken_array )
@@ -114,8 +114,8 @@ BOOST_AUTO_TEST_CASE( parse_object )
 	BOOST_REQUIRE_EQUAL(3, value.index());
 	auto obj = std::get<json::Object>(value);
 	BOOST_REQUIRE_EQUAL(2, obj.size());
-	BOOST_REQUIRE_EQUAL(1, std::get<json::Number>(*obj["a"]));
-	BOOST_REQUIRE_EQUAL(2, std::get<json::Number>(*obj["b"]));
+	BOOST_REQUIRE_EQUAL(1, std::get<json::Number>(obj["a"]));
+	BOOST_REQUIRE_EQUAL(2, std::get<json::Number>(obj["b"]));
 }
 
 BOOST_AUTO_TEST_CASE( parse_string_simple )
@@ -129,9 +129,9 @@ BOOST_AUTO_TEST_CASE( parse_object_withStringContainingQuote )
 	const Glib::ustring val(" { \"key1\": \"value1\", \"key2\": \"value\\\"2\\\"\", \"key3\": 3 } ");
 	auto obj = std::get<json::Object>(json::parseValue(val));
 	BOOST_REQUIRE_EQUAL(3, obj.size());
-	BOOST_REQUIRE_EQUAL("value1", std::get<json::String>(*obj["key1"]));
-	BOOST_REQUIRE_EQUAL("value\"2\"", std::get<json::String>(*obj["key2"]));
-	BOOST_REQUIRE_EQUAL(3, std::get<json::Number>(*obj["key3"]));
+	BOOST_REQUIRE_EQUAL("value1", std::get<json::String>(obj["key1"]));
+	BOOST_REQUIRE_EQUAL("value\"2\"", std::get<json::String>(obj["key2"]));
+	BOOST_REQUIRE_EQUAL(3, std::get<json::Number>(obj["key3"]));
 }
 
 BOOST_AUTO_TEST_CASE( parse_string_invalid_missingOpeningQuote )

@@ -9,13 +9,7 @@
 #define STR(s) #s
 const boost::filesystem::path root(XSTR(ROOT));
 
-template <typename T>
-static
-json::ValuePtr
-jvp(const T & t)
-{
-	return json::ValuePtr(new json::Value(t));
-}
+using namespace std::literals;
 
 static
 std::string
@@ -103,25 +97,24 @@ BOOST_AUTO_TEST_CASE( serialise_quotes )
 
 BOOST_AUTO_TEST_CASE( serialise_complexObject )
 {
-	BOOST_REQUIRE_EQUAL("{\"a\":\"string\",\"b\":null,\"c\":64,\"d\":true,\"e\":{\"suba\":\"suba-val\",\"subb\":\"subb-val\"},\"f\":[true,false,-4.9,\"item\"]}", writeString(json::Object({
-					{"a", jvp(Glib::ustring("string"))},
-					{"b", jvp(json::Null())},
-					{"c", jvp(64.0)},
-					{"d", jvp(true)},
-					{"e", jvp(
-								json::Object({
-									{"suba", jvp(Glib::ustring("suba-val"))},
-									{"subb", jvp(Glib::ustring("subb-val"))}
-									})
-								)},
-					{"f", jvp(
-								json::Array({
-									jvp(true),
-									jvp(false),
-									jvp(-4.9),
-									jvp(Glib::ustring("item"))
-									})
-								)},
-					})));
+	BOOST_REQUIRE_EQUAL("{\"a\":\"string\",\"b\":null,\"c\":64,\"d\":true,\"e\":{\"suba\":\"suba-val\",\"subb\":\"subb-val\"},\"f\":[true,false,-4.9,\"item\"]}", writeString(
+				json::Object({
+					{"a", "string"s},
+					{"b", json::Null()},
+					{"c", 64.0},
+					{"d", true},
+					{"e", json::Object({
+						 {"suba", "suba-val"s},
+						 {"subb", "subb-val"s}
+					 })
+					},
+					{"f", json::Array({
+							true,
+							false,
+							-4.9,
+							"item"s
+						}),
+					}
+				})));
 }
 

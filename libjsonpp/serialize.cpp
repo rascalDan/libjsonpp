@@ -93,7 +93,7 @@ namespace json {
 					if (&v != &*a.begin()) {
 						s << ',';
 					}
-					(*this)(*v);
+					(*this)(v);
 				}
 				s << ']';
 			}
@@ -105,7 +105,7 @@ namespace json {
 					}
 					(*this)(v.first);
 					s << ':';
-					(*this)(*v.second);
+					(*this)(v.second);
 				}
 				s << '}';
 			}
