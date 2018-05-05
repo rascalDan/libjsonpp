@@ -17,7 +17,7 @@ namespace json {
 						<< std::setfill('0') // for String \uNNNN
 						;
 				}
-			void operator()(const VT & v) const {
+			void operator()(const Value & v) const {
 				std::visit(*this, v);
 			}
 			void operator()(const std::string & str) const {

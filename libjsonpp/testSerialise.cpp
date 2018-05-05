@@ -98,23 +98,23 @@ BOOST_AUTO_TEST_CASE( serialise_quotes )
 BOOST_AUTO_TEST_CASE( serialise_complexObject )
 {
 	BOOST_REQUIRE_EQUAL("{\"a\":\"string\",\"b\":null,\"c\":64,\"d\":true,\"e\":{\"suba\":\"suba-val\",\"subb\":\"subb-val\"},\"f\":[true,false,-4.9,\"item\"]}", writeString(
-				json::Object({
+				json::Object {
 					{"a", "string"s},
-					{"b", json::Null()},
+					{"b", json::Null() },
 					{"c", 64.0},
 					{"d", true},
-					{"e", json::Object({
+					{"e", json::Object {
 						 {"suba", "suba-val"s},
 						 {"subb", "subb-val"s}
-					 })
+					 }
 					},
-					{"f", json::Array({
+					{"f", json::Array {
 							true,
 							false,
 							-4.9,
 							"item"s
-						}),
+						},
 					}
-				})));
+				}));
 }
 

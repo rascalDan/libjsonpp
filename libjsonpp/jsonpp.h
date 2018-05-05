@@ -18,17 +18,26 @@ namespace json {
 	typedef double Number;
 	typedef bool Boolean;
 	class Null { };
-	class Value;
-	typedef std::map<std::string, Value> Object;
-	typedef std::list<Value> Array;
-	typedef std::variant<Null, String, Number, Object, Array, Boolean> VT;
-	class Value : public VT {
+	class Object;
+	class Array;
+	typedef std::variant<Null, String, Number, Object, Array, Boolean> Value;
+	typedef std::map<std::string, Value> M;
+	class Object : public M {
 		public:
-			Value() : VT(Null()) { }
-
-			template <class X>
-			Value(const X & x) : VT(x) { }
+			using M::M;
 	};
+	typedef std::list<Value> A;
+	class Array : public A {
+		public:
+			using A::A;
+	};
+
+	static_assert(std::is_move_constructible<Value>::value);
+	static_assert(std::is_nothrow_move_constructible<Object>::value);
+	static_assert(std::is_nothrow_move_constructible<Array>::value);
+	static_assert(std::is_move_assignable<Value>::value);
+	static_assert(std::is_nothrow_move_assignable<Object>::value);
+	static_assert(std::is_nothrow_move_assignable<Array>::value);
 
 	Value parseValue(std::istream &);
 	Value parseValue(std::istream &, const std::string & encoding);
