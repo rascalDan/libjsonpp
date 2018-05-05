@@ -4,7 +4,7 @@
 #include <glibmm/ustring.h>
 #include <variant>
 #include <map>
-#include <list>
+#include <vector>
 #include <stdexcept>
 
 #pragma GCC visibility push(default)
@@ -26,7 +26,7 @@ namespace json {
 		public:
 			using M::M;
 	};
-	typedef std::list<Value> A;
+	typedef std::vector<Value> A;
 	class Array : public A {
 		public:
 			using A::A;
