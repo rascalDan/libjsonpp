@@ -24,10 +24,6 @@ namespace json {
 		return parseValue(stream);
 	}
 
-	Object parseObject(const Glib::ustring & s) {
-		return std::get<Object>(parseValue(s));
-	}
-
 	Value parseValue(Glib::ustring::const_iterator & s) {
 		Glib::ustring::const_iterator start = s;
 		while (*s++) ;
