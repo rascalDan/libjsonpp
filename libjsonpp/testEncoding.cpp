@@ -30,3 +30,11 @@ BOOST_AUTO_TEST_CASE( write_latin1 )
 	BOOST_REQUIRE_EQUAL("\"A \xD9\xF1\xEE\xE7\xF4\xD0\xE8 string.\"", writeString(Glib::ustring("A ÙñîçôÐè string."), "latin1"));
 }
 
+BOOST_AUTO_TEST_CASE( defaultEncoding )
+{
+	json::String s("Some string value");
+	std::stringstream ss;
+	json::serializeValue(s, ss, "");
+	BOOST_REQUIRE_EQUAL(ss.str(), R"S("Some string value")S");
+}
+
