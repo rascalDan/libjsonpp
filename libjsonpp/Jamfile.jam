@@ -3,8 +3,7 @@ import testing ;
 import lex ;
 
 lib boost_utf : : <name>boost_unit_test_framework ;
-lib boost_system ;
-lib boost_filesystem ;
+lib stdc++fs ;
 
 path-constant me : . ;
 
@@ -25,8 +24,7 @@ run
 	<define>BOOST_TEST_DYN_LINK
 	<library>jsonpp
 	<library>boost_utf
-	<library>boost_system
-	<library>boost_filesystem
+	<library>stdc++fs
 	:
 	testParse
 	;
@@ -38,8 +36,7 @@ run
 	<define>BOOST_TEST_DYN_LINK
 	<library>jsonpp
 	<library>boost_utf
-	<library>boost_system
-	<library>boost_filesystem
+	<library>stdc++fs
 	:
 	testSerialise
 	;
@@ -51,8 +48,7 @@ run
 	<define>BOOST_TEST_DYN_LINK
 	<library>jsonpp
 	<library>boost_utf
-	<library>boost_system
-	<library>boost_filesystem
+	<library>stdc++fs
 	:
 	testEncoding
 	;

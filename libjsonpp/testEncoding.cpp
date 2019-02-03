@@ -3,11 +3,11 @@
 
 #include "jsonpp.h"
 #include <fstream>
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
 
 #define XSTR(s) STR(s)
 #define STR(s) #s
-const boost::filesystem::path root(XSTR(ROOT));
+const std::filesystem::path root(XSTR(ROOT));
 
 static
 std::string
