@@ -9,9 +9,9 @@
 namespace json {
 	class jsonFlexLexer : public yyFlexLexer {
 		public:
-			jsonFlexLexer(std::istream &, const std::string & enc, Value & v);
+			jsonFlexLexer(std::istream &, std::string enc, Value & v);
 
-			int yylex();
+			int yylex() override;
 			void LexerError(const char * msg) override;
 
 			void BeginObject();

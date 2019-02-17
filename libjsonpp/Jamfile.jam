@@ -2,7 +2,10 @@ import package ;
 import testing ;
 import lex ;
 
-lib boost_utf : : <name>boost_unit_test_framework ;
+lib boost_utf : : <name>boost_unit_test_framework : :
+	<toolset>tidy:<xcheckxx>hicpp-vararg
+	<toolset>tidy:<xcheckxx>modernize-raw-string-literal
+	;
 lib stdc++fs ;
 
 path-constant me : . ;

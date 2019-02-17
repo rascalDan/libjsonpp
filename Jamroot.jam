@@ -15,7 +15,14 @@ project
 		<variant>debug:<cxxflags>"-W -Wall -Werror -Wextra"
 		<variant>coverage:<cxxflags>"-W -Wall -Werror -Wextra -std=c++1y --coverage"
 		<variant>coverage:<linkflags>"--coverage"
-	;
+		<toolset>tidy:<checkxx>boost-*
+		<toolset>tidy:<checkxx>bugprone-*
+		<toolset>tidy:<checkxx>clang-*
+		<toolset>tidy:<checkxx>misc-*
+		<toolset>tidy:<checkxx>modernize-*
+		<toolset>tidy:<checkxx>hicpp-*
+		<toolset>tidy:<checkxx>performance-*
+		;
 
 build-project libjsonpp ;
 

@@ -3,9 +3,9 @@
 #include <glibmm/convert.h>
 
 namespace json {
-	jsonFlexLexer::jsonFlexLexer(std::istream & in, const std::string & enc, Value & v) :
-		yyFlexLexer(&in, NULL),
-		encoding(enc)
+	jsonFlexLexer::jsonFlexLexer(std::istream & in, std::string enc, Value & v) :
+		yyFlexLexer(&in, nullptr),
+		encoding(std::move(enc))
 	{
 		yy_push_state(0);
 		acceptValues.push([&v](const auto & value) {
