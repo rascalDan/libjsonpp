@@ -10,8 +10,10 @@ lib stdc++fs ;
 
 path-constant me : . ;
 
+obj json : json.ll : <include>. <use>..//glibmm <toolset>tidy:<checker>none ;
 lib jsonpp :
-	[ glob *.cpp *.ll : test*.cpp ]
+	json
+	[ glob *.cpp : test*.cpp ]
 	:
 	<include>.
 	<library>..//glibmm
