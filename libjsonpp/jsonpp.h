@@ -21,7 +21,7 @@ namespace json {
 	class Object;
 	class Array;
 	typedef std::variant<Null, String, Number, Object, Array, Boolean> Value;
-	typedef std::map<std::string, Value> M;
+	typedef std::map<std::string, Value, std::less<>> M;
 	class Object : public M {
 		public:
 			using M::M;
