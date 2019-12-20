@@ -1,4 +1,3 @@
-#include <FlexLexer.h>
 #include "jsonFlexLexer.h"
 #include <glibmm/convert.h>
 

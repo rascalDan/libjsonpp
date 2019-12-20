@@ -5,6 +5,9 @@
 #include "jsonpp.h"
 #include <stack>
 #include <functional>
+#ifndef FLEX_SCANNER
+#include <FlexLexer.h>
+#endif
 
 namespace json {
 	class jsonFlexLexer : public yyFlexLexer {

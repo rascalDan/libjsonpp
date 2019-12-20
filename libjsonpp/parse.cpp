@@ -1,5 +1,4 @@
 #include "jsonpp.h"
-#include <FlexLexer.h>
 #include "jsonFlexLexer.h"
 
 namespace json {
