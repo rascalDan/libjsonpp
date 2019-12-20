@@ -194,6 +194,14 @@ BOOST_AUTO_TEST_CASE( parse_sample_complexFile2 )
 	json::Value obj = json::parseValue(inFile, "utf-8");
 }
 
+BOOST_AUTO_TEST_CASE( parse_sample_complexFile2_bulk, * boost::unit_test::disabled() )
+{
+	for (int x = 0; x < 100; x++) {
+		std::ifstream inFile((root / "initial" / "sample2.json").string());
+		json::Value obj = json::parseValue(inFile, "utf-8");
+	}
+}
+
 BOOST_AUTO_TEST_CASE( parse_from_itr )
 {
 	const Glib::ustring val(" \"A \\u0170\\u0146\\u0129\\u0107\\u0151\\u0111\\u0113 string.\" ");
