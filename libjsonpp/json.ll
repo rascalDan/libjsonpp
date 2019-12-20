@@ -29,6 +29,7 @@ number [-+]?[0-9]+(\.[0-9]+)?
 colon ":"
 separator ","
 escape "\\"
+text [^\\\"]*
 
 %x OBJECT_ITEM
 %x OBJECT_NEXT
@@ -139,7 +140,7 @@ escape "\\"
 	yy_pop_state();
 }
 
-<STRING>. {
+<STRING>{text} {
 	buf += YYText();
 }
 
