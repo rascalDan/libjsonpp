@@ -2,9 +2,11 @@
 #include <glibmm/convert.h>
 
 namespace json {
+	const std::string UTF8 { "utf-8" };
+
 	jsonFlexLexer::jsonFlexLexer(std::istream & in, std::string enc, Value & v) :
 		yyFlexLexer(&in, nullptr),
-		encoding(std::move(enc))
+		encoding(enc != UTF8 ? std::move(enc) : std::string())
 	{
 		yy_push_state(0);
 		acceptValues.push([&v](const auto & value) {
@@ -17,7 +19,7 @@ namespace json {
 	jsonFlexLexer::encodeBuf() const
 	{
 		if (!encoding.empty()) {
-			return Glib::convert(buf, "utf-8", encoding);
+			return Glib::convert(buf, UTF8, encoding);
 		}
 		return buf;
 	}
