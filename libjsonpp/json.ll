@@ -94,18 +94,18 @@ text [^\\\"]*
 }
 
 <OBJECT_NEXT>{endobj} {
-	PushObject();
+	EndObject();
 	yy_pop_state();
 }
 
 <ARRAY_ITEM>{endarray} {
-	PushArray();
+	EndArray();
 	yy_pop_state();
 	yy_pop_state();
 }
 
 <ARRAY_NEXT>{endarray} {
-	PushArray();
+	EndArray();
 	yy_pop_state();
 }
 

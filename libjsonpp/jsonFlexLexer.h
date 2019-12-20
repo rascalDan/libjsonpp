@@ -24,8 +24,9 @@ namespace json {
 			void PushNumber(double);
 			void PushNull();
 			void PushText(std::string &&);
-			void PushArray();
-			void PushObject();
+
+			void EndArray();
+			void EndObject();
 
 		private:
 			std::string encodeBuf() const;

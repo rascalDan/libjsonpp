@@ -67,13 +67,13 @@ namespace json {
 	}
 
 	void
-	jsonFlexLexer::PushArray()
+	jsonFlexLexer::EndArray()
 	{
 		acceptValues.pop();
 	}
 
 	void
-	jsonFlexLexer::PushObject()
+	jsonFlexLexer::EndObject()
 	{
 		acceptValues.pop();
 	}
