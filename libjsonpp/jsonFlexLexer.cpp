@@ -10,7 +10,7 @@ namespace json {
 	{
 		yy_push_state(0);
 		acceptValues.push([&v](auto && value) {
-			v = std::move(value);
+			v = std::forward<Value>(value);
 			return &v;
 		});
 	}
@@ -29,7 +29,7 @@ namespace json {
 	{
 		auto object = std::get_if<Object>(acceptValues.top()(Object()));
 		acceptValues.push([object,this](auto && value) {
-			return &object->emplace(std::move(name), std::move(value)).first->second;
+			return &object->emplace(std::move(name), std::forward<Value>(value)).first->second;
 		});
 	}
 
@@ -38,7 +38,7 @@ namespace json {
 	{
 		auto array = std::get_if<Array>(acceptValues.top()(Array()));
 		acceptValues.push([array](auto && value) {
-			return &array->emplace_back(std::move(value));
+			return &array->emplace_back(std::forward<Value>(value));
 		});
 	}
 
