@@ -9,8 +9,8 @@ namespace json {
 		encoding(enc != UTF8 ? std::move(enc) : std::string())
 	{
 		yy_push_state(0);
-		acceptValues.push([&v](const auto & value) {
-			v = value;
+		acceptValues.push([&v](auto && value) {
+			v = std::move(value);
 			return &v;
 		});
 	}
@@ -28,8 +28,8 @@ namespace json {
 	jsonFlexLexer::BeginObject()
 	{
 		auto object = std::get_if<Object>(acceptValues.top()(Object()));
-		acceptValues.push([object,this](const auto & value) {
-			return &object->insert_or_assign(name, value).first->second;
+		acceptValues.push([object,this](auto && value) {
+			return &object->emplace(std::move(name), std::move(value)).first->second;
 		});
 	}
 
@@ -37,8 +37,8 @@ namespace json {
 	jsonFlexLexer::BeginArray()
 	{
 		auto array = std::get_if<Array>(acceptValues.top()(Array()));
-		acceptValues.push([array](const auto & value) {
-			return &array->emplace_back(value);
+		acceptValues.push([array](auto && value) {
+			return &array->emplace_back(std::move(value));
 		});
 	}
 
@@ -61,9 +61,9 @@ namespace json {
 	}
 
 	void
-	jsonFlexLexer::PushText(const std::string & value)
+	jsonFlexLexer::PushText(std::string && value)
 	{
-		acceptValues.top()(value);
+		acceptValues.top()(std::move(value));
 	}
 
 	void

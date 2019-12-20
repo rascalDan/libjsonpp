@@ -23,7 +23,7 @@ namespace json {
 			void PushBoolean(bool);
 			void PushNumber(double);
 			void PushNull();
-			void PushText(const std::string &);
+			void PushText(std::string &&);
 			void PushArray();
 			void PushObject();
 
@@ -32,7 +32,7 @@ namespace json {
 
 			std::string buf, name, encoding;
 
-			typedef std::function<Value *(const Value &)> AcceptValue;
+			using AcceptValue = std::function<Value *(Value &&)>;
 			std::stack<AcceptValue> acceptValues;
 	};
 }
