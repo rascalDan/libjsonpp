@@ -30,7 +30,8 @@ namespace json {
 		private:
 			std::string encodeBuf() const;
 
-			std::string buf, name, encoding;
+			std::string buf, name;
+			const std::string encoding;
 
 			using AcceptValue = std::function<Value *(Value &&)>;
 			std::stack<AcceptValue> acceptValues;
