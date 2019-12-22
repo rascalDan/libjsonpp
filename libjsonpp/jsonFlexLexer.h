@@ -2,41 +2,45 @@
 #define JSONFLEXLEXER_H
 
 #include <string>
-#include "jsonpp.h"
-#include <stack>
-#include <functional>
+#include <stdexcept>
 #ifndef FLEX_SCANNER
+#define yyFlexLexer jsonBaseFlexLexer
 #include <FlexLexer.h>
 #endif
 
 namespace json {
+#pragma GCC visibility push(default)
+	class ParseError : public std::invalid_argument {
+		public:
+			ParseError(const char *, int, int);
+	};
+
 	class jsonFlexLexer : public yyFlexLexer {
 		public:
-			jsonFlexLexer(std::istream &, std::string enc, Value & v);
+			jsonFlexLexer(std::istream &, std::string enc);
 
 			int yylex() override;
-			void LexerError(const char * msg) override;
-
-			void BeginObject();
-			void BeginArray();
-
-			void PushBoolean(bool);
-			void PushNumber(double);
-			void PushNull();
-			void PushText(std::string &&);
-
-			void EndArray();
-			void EndObject();
 
 		private:
+			virtual void BeginObject() = 0;
+			virtual void BeginArray() = 0;
+
+			virtual void PushBoolean(bool) = 0;
+			virtual void PushNumber(double) = 0;
+			virtual void PushNull() = 0;
+			virtual void PushText(std::string &&) = 0;
+			virtual void PushKey(std::string &&) = 0;
+
+			virtual void EndArray() = 0;
+			virtual void EndObject() = 0;
+
+			void LexerError(const char * msg) override;
 			std::string encodeBuf() const;
 
-			std::string buf, name;
+			std::string buf;
 			const std::string encoding;
-
-			using AcceptValue = std::function<Value *(Value &&)>;
-			std::stack<AcceptValue> acceptValues;
 	};
+#pragma GCC visibility pop
 }
 
 #endif

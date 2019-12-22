@@ -4,9 +4,6 @@
 #include <iomanip>
 
 namespace json {
-	const std::string null("null");
-	const std::string utf8("utf-8");
-
 	class JsonSerialize {
 		public:
 			JsonSerialize(std::ostream & out, const std::string & encoding) :

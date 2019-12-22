@@ -1,22 +1,20 @@
-#ifndef JSON_H
-#define JSON_H
+#ifndef JSONPP_H
+#define JSONPP_H
 
 #include <glibmm/ustring.h>
 #include <variant>
 #include <map>
 #include <vector>
-#include <stdexcept>
+#include "jsonFlexLexer.h"
 
-#pragma GCC visibility push(default)
 namespace json {
-	class ParseError : public std::invalid_argument {
-		public:
-			ParseError(const char *, int, int);
-	};
+	extern const std::string utf8;
+	extern const std::string null;
 
 	typedef Glib::ustring String;
 	typedef double Number;
 	typedef bool Boolean;
+#pragma GCC visibility push(default)
 	class Null { };
 	class Object;
 	class Array;
@@ -32,21 +30,14 @@ namespace json {
 			using A::A;
 	};
 
-	static_assert(std::is_move_constructible<Value>::value);
-	static_assert(std::is_nothrow_move_constructible<Object>::value);
-	static_assert(std::is_nothrow_move_constructible<Array>::value);
-	static_assert(std::is_move_assignable<Value>::value);
-	static_assert(std::is_nothrow_move_assignable<Object>::value);
-	static_assert(std::is_nothrow_move_assignable<Array>::value);
-
 	Value parseValue(std::istream &);
 	Value parseValue(std::istream &, const std::string & encoding);
 	Value parseValue(const Glib::ustring & s);
 	Value parseValue(Glib::ustring::const_iterator & s);
 
 	void serializeValue(const Value &, std::ostream & s, const std::string & encoding);
-}
 #pragma GCC visibility pop
+}
 
 #endif
 

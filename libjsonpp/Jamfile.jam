@@ -17,7 +17,6 @@ lib jsonpp :
 	:
 	<include>.
 	<library>..//glibmm
-	<define>yyFlexLexer=jsonBaseFlexLexer
 	: :
 	<include>.
 	;
@@ -58,5 +57,5 @@ run
 	testEncoding
 	;
 
-package.install install : <install-source-root>. : : jsonpp : [ glob *.h : jsonFlexLexer.h ] ;
+package.install install : <install-source-root>. : : jsonpp : [ glob *.h : jsonValueFlexLexer.h ] ;
 

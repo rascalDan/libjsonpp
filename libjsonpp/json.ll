@@ -8,6 +8,7 @@
 %option prefix="jsonBase"
 
 %{
+#include <glibmm/ustring.h>
 #include "jsonFlexLexer.h"
 #pragma GCC diagnostic ignored "-Wsign-compare"
 #pragma GCC diagnostic ignored "-Wimplicit-fallthrough"
@@ -86,7 +87,7 @@ text [^\\\"]*
 			yy_pop_state();
 			break;
 		case OBJECT_ITEM:
-			name = encodeBuf();
+			PushKey(encodeBuf());
 			BEGIN(COLON);
 			break;
 	}

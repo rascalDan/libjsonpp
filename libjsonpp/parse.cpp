@@ -1,19 +1,14 @@
 #include "jsonpp.h"
-#include "jsonFlexLexer.h"
+#include "jsonValueFlexLexer.h"
 
 namespace json {
-	ParseError::ParseError(const char * at, int l, int s) :
-		std::invalid_argument(Glib::ustring::compose("Parse error at or near %1 (line %2, state %3)", at, l, s))
-	{
-	}
-
 	Value parseValue(std::istream & s) {
 		return parseValue(s, std::string());
 	}
 
 	Value parseValue(std::istream & s, const std::string & enc) {
 		Value v;
-		jsonFlexLexer jfl(s, enc, v);
+		jsonValueFlexLexer jfl(s, enc, v);
 		while (jfl.yylex()) {}
 		return v;
 	}
