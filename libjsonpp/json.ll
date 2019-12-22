@@ -148,6 +148,6 @@ text [^\\\"]*
 }
 
 <*>. {
-	throw ParseError(YYText(), yylineno, YY_START);
+	throw ParseError(YYText(), yylineno, yy_top_state());
 }
 
