@@ -1,0 +1,11 @@
+prefix=/usr
+includedir=${prefix}/include
+name=jsonpp
+
+Name: PN
+Description: C++ JSON parser/writer
+Version: PV
+Requires: glibmm-2.4
+Libs: -l${name}
+Cflags: -I${includedir}
+
