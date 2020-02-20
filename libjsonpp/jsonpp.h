@@ -11,20 +11,20 @@ namespace json {
 	extern const std::string utf8;
 	extern const std::string null;
 
-	typedef Glib::ustring String;
-	typedef double Number;
-	typedef bool Boolean;
+	using String = Glib::ustring;
+	using Number = double;
+	using Boolean = bool;
 #pragma GCC visibility push(default)
 	class Null { };
 	class Object;
 	class Array;
-	typedef std::variant<Null, String, Number, Object, Array, Boolean> Value;
-	typedef std::map<std::string, Value, std::less<>> M;
+	using Value = std::variant<Null, String, Number, Object, Array, Boolean>;
+	using M = std::map<std::string, Value, std::less<>>;
 	class Object : public M {
 		public:
 			using M::M;
 	};
-	typedef std::vector<Value> A;
+	using A = std::vector<Value>;
 	class Array : public A {
 		public:
 			using A::A;
