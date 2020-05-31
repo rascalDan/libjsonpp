@@ -11,4 +11,3 @@ namespace json {
 	static_assert(std::is_nothrow_move_assignable<Object>::value);
 	static_assert(std::is_nothrow_move_assignable<Array>::value);
 }
-

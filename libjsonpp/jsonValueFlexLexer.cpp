@@ -13,7 +13,7 @@ namespace json {
 	jsonValueFlexLexer::BeginObject()
 	{
 		auto object = std::get_if<Object>(acceptValues.top()(Object()));
-		acceptValues.push([object,this](auto && value) {
+		acceptValues.push([object, this](auto && value) {
 			return &object->emplace(std::move(name), std::forward<Value>(value)).first->second;
 		});
 	}
@@ -69,4 +69,3 @@ namespace json {
 		acceptValues.pop();
 	}
 }
-

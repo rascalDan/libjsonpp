@@ -3,8 +3,7 @@
 
 namespace json {
 	jsonFlexLexer::jsonFlexLexer(std::istream & in, std::string enc) :
-		yyFlexLexer(&in, nullptr),
-		encoding(enc != utf8 ? std::move(enc) : std::string())
+		yyFlexLexer(&in, nullptr), encoding(enc != utf8 ? std::move(enc) : std::string())
 	{
 		yy_push_state(0);
 	}
@@ -29,4 +28,3 @@ namespace json {
 	{
 	}
 }
-

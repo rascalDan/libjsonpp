@@ -1,11 +1,11 @@
 #ifndef JSONPP_H
 #define JSONPP_H
 
-#include <glibmm/ustring.h>
-#include <variant>
-#include <map>
-#include <vector>
 #include "jsonFlexLexer.h"
+#include <glibmm/ustring.h>
+#include <map>
+#include <variant>
+#include <vector>
 
 namespace json {
 	extern const std::string utf8;
@@ -15,19 +15,20 @@ namespace json {
 	using Number = double;
 	using Boolean = bool;
 #pragma GCC visibility push(default)
-	class Null { };
+	class Null {
+	};
 	class Object;
 	class Array;
 	using Value = std::variant<Null, String, Number, Object, Array, Boolean>;
 	using M = std::map<std::string, Value, std::less<>>;
 	class Object : public M {
-		public:
-			using M::M;
+	public:
+		using M::M;
 	};
 	using A = std::vector<Value>;
 	class Array : public A {
-		public:
-			using A::A;
+	public:
+		using A::A;
 	};
 
 	Value parseValue(std::istream &);
@@ -40,4 +41,3 @@ namespace json {
 }
 
 #endif
-
