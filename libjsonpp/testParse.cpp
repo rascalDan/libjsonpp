@@ -69,7 +69,10 @@ BOOST_AUTO_TEST_CASE(parse_array)
 BOOST_AUTO_TEST_CASE(parse_array_of_strings)
 {
 	const Glib::ustring val(" [ \"en\", \"de\", \"ro\", \"es\", \"fa\" ] ");
-	std::get<json::Array>(json::parseValue(val));
+	const auto arr = std::get<json::Array>(json::parseValue(val));
+	BOOST_REQUIRE_EQUAL(arr.size(), 5);
+	BOOST_CHECK_EQUAL(std::get<json::String>(arr.front()), "en");
+	BOOST_CHECK_EQUAL(std::get<json::String>(arr.back()), "fa");
 }
 
 BOOST_AUTO_TEST_CASE(parse_null)
