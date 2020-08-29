@@ -78,6 +78,54 @@ BOOST_AUTO_TEST_CASE(parse_null)
 	std::get<json::Null>(json::parseValue(val));
 }
 
+BOOST_AUTO_TEST_CASE(parse_empty_object)
+{
+	const Glib::ustring val(" {  } ");
+	BOOST_REQUIRE(std::get<json::Object>(json::parseValue(val)).empty());
+}
+
+BOOST_AUTO_TEST_CASE(parse_broken_object_lone_number)
+{
+	const Glib::ustring val(" { 1 } ");
+	BOOST_REQUIRE_THROW(json::parseValue(val), json::ParseError);
+}
+
+BOOST_AUTO_TEST_CASE(parse_broken_object_lone_string)
+{
+	const Glib::ustring val(" { \"string\" } ");
+	BOOST_REQUIRE_THROW(json::parseValue(val), json::ParseError);
+}
+
+BOOST_AUTO_TEST_CASE(parse_broken_object_missing_value)
+{
+	const Glib::ustring val(" { \"string\": } ");
+	BOOST_REQUIRE_THROW(json::parseValue(val), json::ParseError);
+}
+
+BOOST_AUTO_TEST_CASE(parse_broken_object_missing_second_name)
+{
+	const Glib::ustring val(" { \"string\": 1, } ");
+	BOOST_REQUIRE_THROW(json::parseValue(val), json::ParseError);
+}
+
+BOOST_AUTO_TEST_CASE(parse_broken_object_missing_second_colon)
+{
+	const Glib::ustring val(" { \"string\": 1, \"string2\" } ");
+	BOOST_REQUIRE_THROW(json::parseValue(val), json::ParseError);
+}
+
+BOOST_AUTO_TEST_CASE(parse_broken_object_missing_second_value)
+{
+	const Glib::ustring val(" { \"string\": 1, \"string2\": } ");
+	BOOST_REQUIRE_THROW(json::parseValue(val), json::ParseError);
+}
+
+BOOST_AUTO_TEST_CASE(parse_broken_object_lone_bool)
+{
+	const Glib::ustring val(" { true } ");
+	BOOST_REQUIRE_THROW(json::parseValue(val), json::ParseError);
+}
+
 BOOST_AUTO_TEST_CASE(parse_empty_array)
 {
 	const Glib::ustring val(" [  ] ");

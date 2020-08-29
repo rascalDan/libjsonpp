@@ -33,6 +33,7 @@ escape "\\"
 text [^\\\"]*
 
 %x OBJECT_ITEM
+%x OBJECT_ITEM_OR_END
 %x OBJECT_NEXT
 %x ARRAY_ITEM
 %x ARRAY_NEXT
@@ -63,13 +64,13 @@ text [^\\\"]*
 	yy_pop_state();
 }
 
-<ARRAY_ITEM,INITIAL,OBJECT_ITEM>{beginstr} {
+<ARRAY_ITEM,INITIAL,OBJECT_ITEM,OBJECT_ITEM_OR_END>{beginstr} {
 	yy_push_state(STRING);
 }
 
 <ARRAY_ITEM,INITIAL>{beginobj} {
 	BeginObject();
-	BEGIN(OBJECT_ITEM);
+	BEGIN(OBJECT_ITEM_OR_END);
 }
 
 <ARRAY_ITEM,INITIAL>{beginarray} {
@@ -87,6 +88,7 @@ text [^\\\"]*
 			yy_pop_state();
 			break;
 		case OBJECT_ITEM:
+		case OBJECT_ITEM_OR_END:
 			PushKey(encodeBuf());
 			BEGIN(COLON);
 			break;
@@ -94,7 +96,7 @@ text [^\\\"]*
 	buf.clear();
 }
 
-<OBJECT_NEXT>{endobj} {
+<OBJECT_NEXT,OBJECT_ITEM_OR_END>{endobj} {
 	EndObject();
 	yy_pop_state();
 }
