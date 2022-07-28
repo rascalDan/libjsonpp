@@ -251,7 +251,7 @@ BOOST_AUTO_TEST_CASE(parse_sample_complexFile2_bulk, *boost::unit_test::disabled
 {
 	for (int x = 0; x < 100; x++) {
 		std::ifstream inFile((root / "initial" / "sample2.json").string());
-		json::Value obj = json::parseValue(inFile, "utf-8");
+		std::ignore = json::parseValue(inFile, "utf-8");
 	}
 }
 
