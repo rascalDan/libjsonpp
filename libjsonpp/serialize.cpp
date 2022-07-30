@@ -15,6 +15,7 @@ namespace json {
 					;
 		}
 		void
+		// NOLINTNEXTLINE(misc-no-recursion)
 		operator()(const Value & v) const
 		{
 			std::visit(*this, v);
@@ -97,6 +98,7 @@ namespace json {
 			s << std::dec << n;
 		}
 		void
+		// NOLINTNEXTLINE(misc-no-recursion)
 		operator()(const Array & a) const
 		{
 			s << '[';
@@ -109,6 +111,7 @@ namespace json {
 			s << ']';
 		}
 		void
+		// NOLINTNEXTLINE(misc-no-recursion)
 		operator()(const Object & o) const
 		{
 			s << '{';

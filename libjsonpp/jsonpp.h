@@ -20,11 +20,13 @@ namespace json {
 	class Array;
 	using Value = std::variant<Null, String, Number, Object, Array, Boolean>;
 	using M = std::map<std::string, Value, std::less<>>;
+	// NOLINTNEXTLINE(misc-no-recursion)
 	class Object : public M {
 	public:
 		using M::M;
 	};
 	using A = std::vector<Value>;
+	// NOLINTNEXTLINE(misc-no-recursion)
 	class Array : public A {
 	public:
 		using A::A;
