@@ -18,6 +18,7 @@ project
 		<variant>debug:<warnings>extra
 		<variant>debug:<warnings-as-errors>on
 		<variant>coverage:<coverage>on
+		<toolset>tidy:<enable>all
 		<toolset>tidy:<checkxx>boost-*
 		<toolset>tidy:<checkxx>bugprone-*
 		<toolset>tidy:<checkxx>clang-*
@@ -27,6 +28,8 @@ project
 		<toolset>tidy:<checkxx>hicpp-*
 		<toolset>tidy:<xcheckxx>hicpp-named-parameter
 		<toolset>tidy:<checkxx>performance-*
+		<toolset>tidy:<librarydef>std
+		<toolset>tidy:<librarydef>boost
 		;
 
 build-project libjsonpp ;
