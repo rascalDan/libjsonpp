@@ -8,7 +8,7 @@
 %option prefix="jsonBase"
 
 %{
-#include <glibmm/ustring.h>
+#include "ustring_wrap.h"
 #include "jsonFlexLexer.h"
 #pragma GCC diagnostic ignored "-Wsign-compare"
 #pragma GCC diagnostic ignored "-Wimplicit-fallthrough"

@@ -2,7 +2,7 @@
 #define JSONPP_H
 
 #include "jsonFlexLexer.h"
-#include <glibmm/ustring.h>
+#include "ustring_wrap.h"
 #include <map>
 #include <variant>
 #include <vector>
@@ -15,8 +15,7 @@ namespace json {
 	using Number = double;
 	using Boolean = bool;
 #pragma GCC visibility push(default)
-	class Null {
-	};
+	class Null { };
 	class Object;
 	class Array;
 	using Value = std::variant<Null, String, Number, Object, Array, Boolean>;

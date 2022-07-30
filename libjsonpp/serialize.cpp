@@ -1,4 +1,5 @@
 #include "jsonpp.h"
+#include "ustring_wrap.h"
 #include <glibmm/convert.h>
 #include <iomanip>
 #include <ios>
